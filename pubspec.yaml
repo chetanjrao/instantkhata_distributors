@@ -53,9 +53,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/profile.png
+
   fonts:
     - family: Axiforma
       fonts:
@@ -75,7 +75,6 @@ flutter:
         - asset: fonts/Axiforma-ThinItalic.ttf
         - asset: fonts/Axiforma-Regular.ttf
         - asset: fonts/Axiforma-SemiBold.ttf
-        - asset: fonts/Axiforma-SemiBoldItalic.ttf
         - asset: fonts/Axiforma-Italic.ttf
 
     - family: Montserrat

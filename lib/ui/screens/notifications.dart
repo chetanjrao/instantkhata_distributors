@@ -21,6 +21,7 @@ class _NotificationsState extends State<Notifications> {
           icon: Icon(
             Feather.arrow_left,
             color: Colors.black,
+            size: 20.0,
           ),
           onPressed: (){
             

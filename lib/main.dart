@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/screens/dashboard.dart';
+import 'package:instantkhata_distributors/ui/screens/inventory.dart';
 import 'package:instantkhata_distributors/ui/screens/notifications.dart';
+import 'package:instantkhata_distributors/ui/screens/ledger.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 
 void main() {
@@ -43,10 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return Dashboard();
       case 1:
-        return Text("Inventory");
+        return Inventory();
       case 2:
-        return Notifications();
+        return Text("Reports");
       case 3:
+        return Ledger();
+      case 4:
         return Text("Profile");
       default:
         return Dashboard();
@@ -104,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Feather.bell,
+              Feather.file_text,
               size: 21.0,
               ),
             title: Container(
@@ -119,7 +123,22 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Feather.user,
+              Feather.book,
+              size: 21.0,
+              ),
+            title: Container(
+              margin: EdgeInsets.only(top: 5.0),
+              height: 5.0,
+              width: 5.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: primaryColor
+              ),
+            )
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Feather.users,
               size: 21.0,
               ),
             title: Container(
@@ -133,16 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 2.0,
-        onPressed: (){
-
-        },
-        tooltip: 'Increment',
-        backgroundColor: primaryColor,
-        child: Icon(Feather.plus),
-      ),
+      )
     );
   }
 }

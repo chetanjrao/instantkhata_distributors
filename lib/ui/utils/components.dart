@@ -48,7 +48,7 @@ class DataCard extends StatelessWidget {
                 dataCount,
                 style: TextStyle(
                   fontSize: 21.0,
-                  fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w600
                 ),
               ),
               Container(
