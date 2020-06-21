@@ -5,6 +5,8 @@ import 'package:instantkhata_distributors/ui/screens/dashboard.dart';
 import 'package:instantkhata_distributors/ui/screens/inventory.dart';
 import 'package:instantkhata_distributors/ui/screens/notifications.dart';
 import 'package:instantkhata_distributors/ui/screens/ledger.dart';
+import 'package:instantkhata_distributors/ui/screens/sales.dart';
+import 'package:instantkhata_distributors/ui/screens/users.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 
 void main() {
@@ -47,11 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return Inventory();
       case 2:
-        return Text("Reports");
+        return Sales();
       case 3:
         return Ledger();
       case 4:
-        return Text("Profile");
+        return Users();
       default:
         return Dashboard();
     }

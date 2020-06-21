@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class Inventory extends StatefulWidget {
   @override
@@ -11,16 +12,33 @@ class Inventory extends StatefulWidget {
 class _InventoryState extends State<Inventory> with SingleTickerProviderStateMixin {
   
   TabController _tabController;
+  List<String> _categories = [];
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    _tabController = new TabController(length: 5, vsync: this);
+    _categories = ["Cereals", "IceCreams", "Groceries", "Miscs"];
+    _tabController = new TabController(length: _categories.length, vsync: this);
     super.initState();
   }
+
+  List<Widget> categoryBuilder(){
+    List<Widget> _widgets = [];
+    for(int i=0; i<_categories.length; i++) {
+      _widgets.add(Tab(
+        child: Text(
+          _categories[i]
+        ),
+      ));
+    }
+    return _widgets;
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 2.0,
         backgroundColor: Colors.white,
@@ -42,33 +60,7 @@ class _InventoryState extends State<Inventory> with SingleTickerProviderStateMix
           unselectedLabelColor: Colors.grey,
           labelColor: primaryColor,
           controller: _tabController,
-          tabs: [
-            Tab(
-              child: Text(
-                "Cereals"
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Icecreams"
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Groceries"
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Mics"
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Groceries"
-              ),
-            ),
-          ]
+          tabs: categoryBuilder()
         ),
       ),
       body: TabBarView(
@@ -168,18 +160,150 @@ class _InventoryState extends State<Inventory> with SingleTickerProviderStateMix
           Text("Icecreams"),
           Text("Groceries"),
           Text("Mics"),
-          Text("Hardware"),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 2.0,
-        onPressed: (){
-
-        },
-        tooltip: 'Add Inventory',
-        backgroundColor: primaryColor,
-        child: Icon(Feather.plus),
-      ),
+      floatingActionButton: SpeedDial(
+          // both default to 16
+          marginRight: 18,
+          marginBottom: 20,
+          animatedIcon: AnimatedIcons.menu_close,
+          animatedIconTheme: IconThemeData(size: 24.0),
+          closeManually: false,
+          curve: Curves.bounceIn,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.5,
+          onOpen: () => print('OPENING DIAL'),
+          onClose: () => print('DIAL CLOSED'),
+          tooltip: 'Speed Dial',
+          heroTag: 'speed-dial-hero-tag',
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+          elevation: 2.0,
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+              child: Icon(Feather.edit_2, color: primaryColor, size: 18.0),
+              backgroundColor: Colors.white,
+              label: 'Add Category',
+              labelStyle: TextStyle(fontSize: 14.0),
+              onTap: () => showModalBottomSheet(
+                isScrollControlled: true,
+                context: context, builder: (context){
+                  return Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Category Name"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: RaisedButton(
+                          color: primaryColor,
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Add Category",
+                            style: TextStyle(
+                              color: Colors.white
+                            )
+                          )
+                        )
+                        ),
+                      ]
+                    )
+                  );
+              })
+            ),
+            SpeedDialChild(
+              child: Icon(Feather.shopping_cart, color: primaryColor, size: 18.0),
+              backgroundColor: Colors.white,
+              label: 'Add Inventory',
+              labelStyle: TextStyle(fontSize: 14.0),
+              onTap: () => showModalBottomSheet(
+                isScrollControlled: true,
+                context: context, builder: (context){
+                  return Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Feather.x),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Product Name"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Product Cost"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "HSN"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "MRP price per unit"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: "Base Price"
+                            ),
+                          )
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 16.0),
+                          child: RaisedButton(
+                          color: primaryColor,
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Add Item",
+                            style: TextStyle(
+                              color: Colors.white
+                            )
+                          )
+                        )
+                        ),
+                      ]
+                    )
+                  );
+              })
+            ),
+          ],
+        ),
     );
   }
 
