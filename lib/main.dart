@@ -6,6 +6,9 @@ import 'package:instantkhata_distributors/ui/features/dashboard/ui/dashboard.dar
 import 'package:instantkhata_distributors/ui/features/inventory/bloc/inventory_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/data/repository/inventory.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/ui/inventory.dart';
+import 'package:instantkhata_distributors/ui/features/invoices/bloc/invoice_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/invoices/data/repository/invoices.dart';
+import 'package:instantkhata_distributors/ui/features/invoices/ui/invoice.dart';
 import 'package:instantkhata_distributors/ui/features/notifications/ui/notifications.dart';
 import 'package:instantkhata_distributors/ui/features/ledger.dart';
 import 'package:instantkhata_distributors/ui/features/sales.dart';
@@ -48,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
   final InventoryRepository inventoryRepository = new InventoryRepository();
+  final InvoiceRepository invoiceRepository = new InvoiceRepository();
   List<String> titles = ["Statistics", "Inventory", "Transactions", "Invoices", "Retailers", "Salesman", "Profile", "About the app", "Report", "Feedback", "Sign Out"];
   List<IconData> icons = [
     Feather.trending_up,
@@ -155,7 +159,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Inventory()
             ),
             Sales(),
-            Ledger(),
+            BlocProvider(
+              create: (context) => InvoiceBloc(
+                invoiceRepository
+              ),
+              child: Invoice()
+            ),
             Users()
           ],
         ),

@@ -27,5 +27,14 @@ class APIClient {
     );
   }
   
+  Future<http.Response> getInvoices() async {
+    return http.get(
+      "$CONTEXT_API_URL/invoices/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
 
 }

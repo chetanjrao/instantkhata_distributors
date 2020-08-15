@@ -145,28 +145,24 @@ class _InventoryState extends State<Inventory> with SingleTickerProviderStateMix
                   backgroundColor: Colors.white,
                   centerTitle: false,
                   titleSpacing: 0,
-                  
-                leading: Container(
-                  margin: EdgeInsets.only(top: 2.0),
-                  child: IconButton(
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black
-                    )
-                  ),
-                ),
-                title: Container(
-                  margin: EdgeInsets.only(top: 2.0),
-                      child: Text(
-                        "Inventory",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                          fontSize: 18.0
-                        ),
-                      ),
+                  leading: Container(
+                    margin: EdgeInsets.only(top: 2.0),
+                    child: IconButton(
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black
+                      )
                     ),
+                  ),
+                title: Text(
+                    "Inventory",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 18.0
+                    ),
+                  ),
                   bottom: TabBar(
                     isScrollable: true,
                     indicatorWeight: 1.0,
