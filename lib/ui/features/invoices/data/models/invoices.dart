@@ -22,5 +22,4 @@ class InvoiceModel extends Equatable {
       DateTime.parse(json["created_at"])
     );
   }
-
 }

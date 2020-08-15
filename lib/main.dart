@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/features/dashboard/ui/dashboard.dart';
+import 'package:instantkhata_distributors/ui/features/details/bloc/details_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/details/data/repository/details_repository.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/bloc/inventory_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/data/repository/inventory.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/ui/inventory.dart';
@@ -52,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
   final InventoryRepository inventoryRepository = new InventoryRepository();
   final InvoiceRepository invoiceRepository = new InvoiceRepository();
+  final InvoiceInfoRepository invoiceInfoRepository = new InvoiceInfoRepository();
   List<String> titles = ["Statistics", "Inventory", "Transactions", "Invoices", "Retailers", "Salesman", "Profile", "About the app", "Report", "Feedback", "Sign Out"];
   List<IconData> icons = [
     Feather.trending_up,
@@ -159,10 +162,19 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Inventory()
             ),
             Sales(),
-            BlocProvider(
-              create: (context) => InvoiceBloc(
-                invoiceRepository
-              ),
+            MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => InvoiceBloc(
+                    invoiceRepository
+                  ),
+                ),
+                BlocProvider(
+                  create: (context) => InvoiceDetailsBloc(
+                    invoiceInfoRepository: invoiceInfoRepository
+                  ),
+                ),
+              ],
               child: Invoice()
             ),
             Users()

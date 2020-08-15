@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -34,6 +35,29 @@ class APIClient {
         HttpHeaders.authorizationHeader: "Bearer $accessToken",
         HttpHeaders.contentTypeHeader: "application/json"
       }
+    );
+  }
+
+  Future<http.Response> getInvoiceInfo(String invoice) async {
+    return http.get(
+      "$CONTEXT_API_URL/invoices/info/$invoice/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
+
+  Future<http.Response> getNotificationsInfo(String invoice) async {
+    return http.post(
+      "$CONTEXT_API_URL/invoices/notify/check/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "invoice": invoice
+      })
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instantkhata_distributors/ui/features/details/bloc/details_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/details/ui/details.dart';
 import 'package:instantkhata_distributors/ui/features/invoices/bloc/invoice_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/invoices/bloc/invoice_event.dart';
 import 'package:instantkhata_distributors/ui/features/invoices/bloc/invoice_state.dart';
@@ -54,25 +56,28 @@ class _InvoiceState extends State<Invoice> {
                   return ListView.builder(
                     itemCount: state.invoices.length,
                     itemBuilder: (context, index){
-                      return Container(
+                      return Card(
+                        margin: EdgeInsets.zero,
+                        elevation: 2.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero
+                        ),
+                        child: Container(
                           padding: EdgeInsets.symmetric(vertical: 12.0),
                           child: ListTile(
                             onTap: (){
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //   builder: (_) => MultiBlocProvider(
-                              //       providers: [
-                              //         BlocProvider.value(
-                              //           value: context.bloc<InvoiceDetailsBloc>()
-                              //         ),
-                              //         BlocProvider.value(
-                              //           value: context.bloc<EditInvoiceBloc>()
-                              //         ),
-                              //       ], 
-                              //       child: Details(
-                              //     invoiceID: state.invoices[index].uid,
-                              //   ),
-                              //     ),            
-                              // ));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                        value: context.bloc<InvoiceDetailsBloc>()
+                                      ),
+                                    ], 
+                                    child: Details(
+                                  invoiceID: state.invoices[index].uid,
+                                ),
+                                  ),            
+                              ));
                             },
                             leading: Container(
                               width: 48.0,
@@ -127,7 +132,7 @@ class _InvoiceState extends State<Invoice> {
                               )
                             ),
                           )
-                        );
+                        ));
                     },
                   );
               }
