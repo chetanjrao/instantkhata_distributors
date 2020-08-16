@@ -4,6 +4,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/features/salesman/bloc/salesman_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/salesman/bloc/salesman_event.dart';
 import 'package:instantkhata_distributors/ui/features/salesman/bloc/salesman_state.dart';
+import 'package:instantkhata_distributors/ui/features/statistics/bloc/statistics_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/statistics/data/respository/statistics_repository.dart';
+import 'package:instantkhata_distributors/ui/features/statistics/ui/statistics.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +17,8 @@ class Salesman extends StatefulWidget {
 }
 
 class _SalesmanState extends State<Salesman> {
+
+  final StatisticsRepository statisticsRepository = new StatisticsRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,20 @@ class _SalesmanState extends State<Salesman> {
                   return ListView.builder(
                     itemCount: state.salesman.length,
                     itemBuilder: (context, index){
-                      return Card(
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (context) => StatisticsBloc(
+                                dashboardRepository: statisticsRepository
+                              ),
+                              child: Statistics(
+                                salesman: state.salesman[index].id
+                              )
+                            )
+                          ));
+                        },
+                        child: Card(
                         margin: EdgeInsets.only(top: 1.0),
                         elevation: 0.5,
                         child: Container(
@@ -111,7 +129,7 @@ class _SalesmanState extends State<Salesman> {
                             ]
                           )
                         )
-                      );
+                      ));
                     },
                   );
               }

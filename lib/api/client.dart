@@ -102,4 +102,43 @@ class APIClient {
     );
   }
 
+  Future<http.Response> getDashboardStatistics(int salesman) async {
+    return http.post(
+      "$CONTEXT_API_URL/salesman/analytics/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "salesman": salesman
+      })
+    );
+  }
+
+  Future<http.Response> getSalesmanInvoices(int salesman) async {
+    return http.post(
+      "$CONTEXT_API_URL/salesman/invoices/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "salesman": salesman
+      })
+    );
+  }
+
+  Future<http.Response> getSalesmanTransactions(int salesman) async {
+    return http.post(
+      "$CONTEXT_API_URL/salesman/transactions/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "salesman": salesman
+      })
+    );
+  }
+
 }
