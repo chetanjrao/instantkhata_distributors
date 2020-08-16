@@ -92,4 +92,14 @@ class APIClient {
     );
   }
 
+  Future<http.Response> getRetailerSummary(int retailer) async {
+    return http.get(
+      "$CONTEXT_API_URL/retailers/$retailer/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
+
 }

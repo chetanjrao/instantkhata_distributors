@@ -10,6 +10,9 @@ import 'package:instantkhata_distributors/ui/features/invoices/data/repository/i
 import 'package:instantkhata_distributors/ui/features/retailers/bloc/retailer_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/retailers/bloc/retailer_event.dart';
 import 'package:instantkhata_distributors/ui/features/retailers/bloc/retailer_state.dart';
+import 'package:instantkhata_distributors/ui/features/retailersummary/bloc/summary_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/retailersummary/data/repository/summary.dart';
+import 'package:instantkhata_distributors/ui/features/retailersummary/ui/summary.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -21,6 +24,8 @@ class Retailers extends StatefulWidget {
 }
 
 class _RetailersState extends State<Retailers> {
+
+  final SummaryRepository summaryRepository = new SummaryRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +64,20 @@ class _RetailersState extends State<Retailers> {
                   return ListView.builder(
                     itemCount: state.retailers.length,
                     itemBuilder: (context, index){
-                      return Card(
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (context) => SummaryBloc(
+                                  summaryRepository
+                              ),
+                              child: Summary(
+                                retailer: state.retailers[index].id
+                              )
+                            )
+                          ));
+                        },
+                        child: Card(
                         margin: EdgeInsets.only(top: 1.0),
                         elevation: 0.5,
                         child: Container(
@@ -119,7 +137,7 @@ class _RetailersState extends State<Retailers> {
                             ]
                           )
                         )
-                      );
+                      ));
                     },
                   );
               }
