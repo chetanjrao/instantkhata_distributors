@@ -154,4 +154,35 @@ class APIClient {
     );
   }
 
+  Future<http.Response> addCategory(String name) async {
+    return http.post(
+      "$CONTEXT_API_URL/inventory/types/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "name": name
+      })
+    );
+  }
+
+  Future<http.Response> addNewInventory(String name, double mrp, String hsn, double basePrice, int type, int quantity) async {
+    return http.post(
+      "$CONTEXT_API_URL/inventory/add/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "name": name,
+        "mrp": mrp,
+        "hsn": hsn,
+        "base_price": basePrice,
+        "type": type,
+        "quantity": quantity
+      })
+    );
+  }
+
 }

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:instantkhata_distributors/ui/features/inventory/bloc/addinventory_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/inventory/bloc/category_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/bloc/inventory_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/bloc/inventory_event.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/bloc/inventory_state.dart';
 import 'package:instantkhata_distributors/ui/features/inventory/data/models/inventory.dart';
+import 'package:instantkhata_distributors/ui/features/inventory/ui/add_category.dart';
+import 'package:instantkhata_distributors/ui/features/inventory/ui/add_inventory.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:shimmer/shimmer.dart';
@@ -184,8 +188,6 @@ class _InventoryState extends State<Inventory> with SingleTickerProviderStateMix
                     curve: Curves.bounceIn,
                     overlayColor: Colors.black,
                     overlayOpacity: 0.5,
-                    onOpen: () => print('OPENING DIAL'),
-                    onClose: () => print('DIAL CLOSED'),
                     tooltip: 'Speed Dial',
                     heroTag: 'speed-dial-hero-tag',
                     backgroundColor: primaryColor,
@@ -198,121 +200,39 @@ class _InventoryState extends State<Inventory> with SingleTickerProviderStateMix
                         backgroundColor: Colors.white,
                         label: 'Add Category',
                         labelStyle: TextStyle(fontSize: 14.0),
-                        onTap: () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context, builder: (context){
-                            return Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "Category Name"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: RaisedButton(
-                                    color: primaryColor,
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      "Add Category",
-                                      style: TextStyle(
-                                        color: Colors.white
-                                      )
-                                    )
-                                  )
-                                  ),
-                                ]
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider.value(
+                                value: context.bloc<InventoryBloc>(),
+                              ),
+                              BlocProvider(
+                                create: (context) => CategoryBloc()
                               )
-                            );
-                        })
+                            ],
+                            child: AddCategory(),
+                          )
+                          )
+                        )
                       ),
                       SpeedDialChild(
                         child: Icon(Feather.shopping_cart, color: primaryColor, size: 18.0),
                         backgroundColor: Colors.white,
                         label: 'Add Inventory',
                         labelStyle: TextStyle(fontSize: 14.0),
-                        onTap: () => showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context, builder: (context){
-                            return Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(Feather.x),
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "Product Name"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "Product Cost"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "HSN"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "MRP price per unit"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText: "Base Price"
-                                      ),
-                                    )
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 16.0),
-                                    child: RaisedButton(
-                                    color: primaryColor,
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      "Add Item",
-                                      style: TextStyle(
-                                        color: Colors.white
-                                      )
-                                    )
-                                  )
-                                  ),
-                                ]
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider.value(
+                                value: context.bloc<InventoryBloc>(),
+                              ),
+                              BlocProvider(
+                                create: (context) => AddInventoryBloc()
                               )
-                            );
-                          }
+                            ],
+                            child: AddInventory(),
+                          )
+                          )
                         )
                       ),
                     ],

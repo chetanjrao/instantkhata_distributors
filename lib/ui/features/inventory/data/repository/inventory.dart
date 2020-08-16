@@ -22,4 +22,16 @@ class InventoryRepository {
     return categories;
   }
 
+  Future<dynamic> addCategory(String name) async {
+     Response response = await this.apiClient.addCategory(name);
+    dynamic json = jsonDecode(response.body);
+    return json;
+  }
+
+  Future<dynamic> addNewInventory(String name, double mrp, String hsn, double basePrice, int type, int quantity) async {
+    Response response = await this.apiClient.addNewInventory(name, mrp, hsn, basePrice, type, quantity);
+    dynamic json = jsonDecode(response.body);
+    return json;
+  }
+
 }
