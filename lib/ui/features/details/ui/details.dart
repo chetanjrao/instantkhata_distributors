@@ -411,11 +411,12 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           unselectedLabelColor: Color(0XFF404864),
           labelStyle: TextStyle(
             fontWeight: FontWeight.w400,
-            fontFamily: 'Euclid Circular B'
+            fontFamily: 'Axiforma'
           ),
           tabs: <Widget>[
             Tab(
               text: "Product List",
+              
             )
           ],
         ),

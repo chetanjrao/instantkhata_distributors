@@ -9,10 +9,10 @@ class InvoiceDetail {
     @required this.invoiceSales
   });
 
-  static InvoiceDetail fromJson(dynamic json){
+  static Future<InvoiceDetail> fromJson(dynamic json) async {
     List<InvoiceSale> sales = json["sales"].map<InvoiceSale>((e) => InvoiceSale.fromJson(e)).toList();
     return InvoiceDetail(
-      invoiceInfo: InvoiceInfo.fromJson(json["info"]),
+      invoiceInfo: await InvoiceInfo.fromJson(json["info"]),
       invoiceSales: sales
     );
   }
@@ -38,7 +38,7 @@ class InvoiceInfo {
     @required this.createdAt
   });
 
-  static InvoiceInfo fromJson(dynamic json){
+  static Future<InvoiceInfo> fromJson(dynamic json) async {
     return InvoiceInfo(
       uid: json["uid"],
       retailer: json["retailer"],

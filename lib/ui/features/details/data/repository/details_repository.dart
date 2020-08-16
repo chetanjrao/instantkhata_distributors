@@ -11,7 +11,7 @@ class InvoiceInfoRepository {
   Future<InvoiceDetail> getInvoiceInfo(String invoiceID) async{
     Response _responseData = await _apiClient.getInvoiceInfo(invoiceID);
     dynamic parsedData = jsonDecode(_responseData.body);
-    InvoiceDetail _invoiceInfo = InvoiceDetail.fromJson(parsedData);
+    InvoiceDetail _invoiceInfo = await InvoiceDetail.fromJson(parsedData);
     return _invoiceInfo;
   }
 

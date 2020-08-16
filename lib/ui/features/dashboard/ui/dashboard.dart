@@ -4,6 +4,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/utils/components.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:instantkhata_distributors/ui/utils/header.dart';
+import 'package:translator/translator.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -12,7 +13,12 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+  final translator = GoogleTranslator();
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

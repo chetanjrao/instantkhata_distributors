@@ -5,6 +5,7 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:instantkhata_distributors/ui/utils/components.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:instantkhata_distributors/ui/utils/header.dart';
+import 'package:translator/translator.dart';
 
 class Sales extends StatefulWidget {
   @override
@@ -13,7 +14,42 @@ class Sales extends StatefulWidget {
 
 class _SalesState extends State<Sales> {
 
+  String pageTitle = "Reports";
+  String transactions = "Transactions";
+  String transactionsThisMonth = "Transactions this month";
+  String itemsSold = "Items Sold";
+  String forLastMonth = "for last month";
+  final translator = new GoogleTranslator();
 
+  @override
+  void initState() {
+    super.initState();
+    translator.translate(pageTitle, from: 'en', to: 'hi').then((value){
+      setState((){
+        pageTitle = value.text;
+      });
+    });
+    translator.translate(transactions, from: 'en', to: 'hi').then((value){
+      setState((){
+        transactions = value.text;
+      });
+    });
+    translator.translate(transactionsThisMonth, from: 'en', to: 'hi').then((value){
+      setState((){
+        transactionsThisMonth = value.text;
+      });
+    });
+    translator.translate(itemsSold, from: 'en', to: 'hi').then((value){
+      setState((){
+        itemsSold = value.text;
+      });
+    });
+    translator.translate(forLastMonth, from: 'en', to: 'hi').then((value){
+      setState((){
+        forLastMonth = value.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +83,9 @@ class _SalesState extends State<Sales> {
                     Container(
                       margin: EdgeInsets.only(top: 16.0),
                       child: Text(
-                        "Reports",
+                        "$pageTitle",
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: Colors.black,
                           fontSize: 20.0
                         ),
@@ -80,10 +116,10 @@ class _SalesState extends State<Sales> {
                             direction: Axis.horizontal,
                             children: [
                               Container(
-                                child: DataCard(dataCount: "5,097", dataTag: "Transactions", icon: Feather.arrow_up_right, color: Color(0xFF0db278), dataStats: "+33.50%", backgroundColor: Color(0xFF0db278).withOpacity(0.2)),
+                                child: DataCard(dataCount: "5,097", dataTag: "$transactions", icon: Feather.arrow_up_right, color: Color(0xFF0db278), dataStats: "+33.50%", backgroundColor: Color(0xFF0db278).withOpacity(0.2)),
                               ),
                               Container(
-                                child: DataCard(dataCount: "897", dataTag: "Items sold", icon: Feather.arrow_down_right, color: Color(0xFFfc2b2b), dataStats: "-22.89%", backgroundColor: Color(0xFFfc2b2b).withOpacity(0.2)),
+                                child: DataCard(dataCount: "897", dataTag: "$itemsSold", icon: Feather.arrow_down_right, color: Color(0xFFfc2b2b), dataStats: "-22.89%", backgroundColor: Color(0xFFfc2b2b).withOpacity(0.2)),
                               )
                             ],
                           )
@@ -107,7 +143,7 @@ class _SalesState extends State<Sales> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Transactions this month",
+                                "$transactionsThisMonth",
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w500,
@@ -152,7 +188,7 @@ class _SalesState extends State<Sales> {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: " for last month",
+                                            text: " $forLastMonth",
                                             style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               color: Colors.grey

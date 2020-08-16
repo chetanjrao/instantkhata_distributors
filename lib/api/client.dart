@@ -61,4 +61,14 @@ class APIClient {
     );
   }
 
+  Future<http.Response> getTransactions() async {
+    return http.get(
+      "$CONTEXT_API_URL/transactions/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
+
 }
