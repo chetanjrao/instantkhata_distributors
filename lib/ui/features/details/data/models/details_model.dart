@@ -76,16 +76,3 @@ class InvoiceSale {
   }
 
 }
-
-// class InvoiceTransaction {
-//   final int id;
-//   final int invoiceId;
-//   final double openingBalance;
-//   final double closingBalance;
-//   final double amount;
-//   final double remainingBalance;
-//   final bool isCredit;
-//   final String paymentImage;
-//   final String paymentMode;
-//   final double
-// }

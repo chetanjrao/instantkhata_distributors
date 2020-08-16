@@ -4,6 +4,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:instantkhata_distributors/ui/features/details/bloc/details_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/details/bloc/details_event.dart';
 import 'package:instantkhata_distributors/ui/features/details/bloc/details_state.dart';
+import 'package:instantkhata_distributors/ui/features/details/bloc/notfiy_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/details/bloc/notify_event.dart';
+import 'package:instantkhata_distributors/ui/features/details/bloc/notify_state.dart';
 import 'package:instantkhata_distributors/ui/features/details/data/repository/details_repository.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
@@ -184,7 +187,54 @@ class _DetailsState extends State<Details> with SingleTickerProviderStateMixin {
                               showModalBottomSheet(
                                 context: context, 
                                 builder: (_){
-
+                                  return MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                        value: context.bloc<InvoiceDetailsBloc>()
+                                      ),
+                                      BlocProvider(
+                                        create: (context) => NotifyBloc()
+                                      )
+                                    ],
+                                    child: BlocBuilder<NotifyBloc, NotifyState>(
+                                      builder: (context, state){
+                                        if(state is NotifyInitialState){
+                                          context.bloc<NotifyBloc>().add(SendNotification(widget.invoiceID));
+                                        }
+                                        if(state is NotifySuccessState){
+                                          context.bloc<InvoiceDetailsBloc>().add(LoadInvoiceInfo(invoiceID: widget.invoiceID));
+                                        }
+                                        return Card(
+                                          elevation: 0,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(vertical: 12),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Container(
+                                                  width: 24.0,
+                                                  height: 24.0,
+                                                  margin: EdgeInsets.symmetric(vertical: 12),
+                                                  child: state is NotifySuccessState ? Icon(
+                                                    Icons.check_circle,
+                                                    color: Colors.green
+                                                  ) : CircularProgressIndicator(
+                                                    strokeWidth: 1.2,
+                                                    valueColor: AlwaysStoppedAnimation(primaryColor),
+                                                  )
+                                                ),
+                                                Container(
+                                                  child: Text(
+                                                    state is NotifySuccessState ? "Message sent" : "Sending SMS notification"
+                                                  )
+                                                )
+                                              ]
+                                            ),
+                                          )
+                                        );
+                                      }
+                                    )
+                                  );
                                 }
                             );
                           },

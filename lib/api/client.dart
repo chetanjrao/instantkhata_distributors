@@ -141,4 +141,17 @@ class APIClient {
     );
   }
 
+  Future<http.Response> sendNotification(String invoice) async {
+    return http.post(
+      "$CONTEXT_API_URL/invoices/notify/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      },
+      body: jsonEncode({
+        "invoice": invoice
+      })
+    );
+  }
+
 }
