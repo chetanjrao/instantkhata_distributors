@@ -13,7 +13,13 @@ import 'package:instantkhata_distributors/ui/features/invoices/data/repository/i
 import 'package:instantkhata_distributors/ui/features/invoices/ui/invoice.dart';
 import 'package:instantkhata_distributors/ui/features/notifications/ui/notifications.dart';
 import 'package:instantkhata_distributors/ui/features/ledger.dart';
+import 'package:instantkhata_distributors/ui/features/retailers/bloc/retailer_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/retailers/data/repository/retailer.dart';
+import 'package:instantkhata_distributors/ui/features/retailers/ui/retailers.dart';
 import 'package:instantkhata_distributors/ui/features/sales.dart';
+import 'package:instantkhata_distributors/ui/features/salesman/bloc/salesman_bloc.dart';
+import 'package:instantkhata_distributors/ui/features/salesman/data/repository/salesman.dart';
+import 'package:instantkhata_distributors/ui/features/salesman/ui/salesman.dart';
 import 'package:instantkhata_distributors/ui/features/transactions/bloc/transactions_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/transactions/data/respoitory/transactions.dart';
 import 'package:instantkhata_distributors/ui/features/transactions/ui/transactions.dart';
@@ -59,6 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final InvoiceRepository invoiceRepository = new InvoiceRepository();
   final InvoiceInfoRepository invoiceInfoRepository = new InvoiceInfoRepository();
   final TransactionRepository transactionRepository = new TransactionRepository();
+  final RetailerRepository retailerRepository = new RetailerRepository();
+  final SalesmanRepository salesmanRepository = new SalesmanRepository();
   List<String> titles = ["Statistics", "Inventory", "Transactions", "Invoices", "Retailers", "Salesman", "Profile", "About the app", "Report", "Feedback", "Sign Out"];
   List<IconData> icons = [
     Feather.trending_up,
@@ -186,7 +194,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
               child: Invoice()
             ),
-            Users()
+            BlocProvider(
+              create: (context) => RetailersBloc(
+                retailerRepository
+              ),
+              child: Retailers()
+            ),
+            BlocProvider(
+              create: (context) => SalesmanBloc(
+                salesmanRepository
+              ),
+              child: Salesman()
+            ),
           ],
         ),
         

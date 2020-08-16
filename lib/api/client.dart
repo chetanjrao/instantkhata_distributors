@@ -71,4 +71,25 @@ class APIClient {
     );
   }
 
+
+  Future<http.Response> getRetailers() async {
+    return http.get(
+      "$CONTEXT_API_URL/retailers/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
+
+  Future<http.Response> getSalesman() async {
+    return http.get(
+      "$CONTEXT_API_URL/salesman/",
+      headers: {
+        HttpHeaders.authorizationHeader: "Bearer $accessToken",
+        HttpHeaders.contentTypeHeader: "application/json"
+      }
+    );
+  }
+
 }
