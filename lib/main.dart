@@ -11,6 +11,7 @@ import 'package:instantkhata_distributors/ui/features/inventory/ui/inventory.dar
 import 'package:instantkhata_distributors/ui/features/invoices/bloc/invoice_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/invoices/data/repository/invoices.dart';
 import 'package:instantkhata_distributors/ui/features/invoices/ui/invoice.dart';
+import 'package:instantkhata_distributors/ui/features/login/ui/login.dart';
 import 'package:instantkhata_distributors/ui/features/retailers/bloc/retailer_bloc.dart';
 import 'package:instantkhata_distributors/ui/features/retailers/data/repository/retailer.dart';
 import 'package:instantkhata_distributors/ui/features/retailers/ui/retailers.dart';
@@ -21,6 +22,7 @@ import 'package:instantkhata_distributors/ui/features/transactions/bloc/transact
 import 'package:instantkhata_distributors/ui/features/transactions/data/respoitory/transactions.dart';
 import 'package:instantkhata_distributors/ui/features/transactions/ui/transactions.dart';
 import 'package:instantkhata_distributors/ui/utils/constants.dart';
+import 'package:instantkhata_distributors/ui/utils/loader.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +34,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,14 +45,18 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Axiforma',
       ),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: "/loader",
+      routes: {
+        "/home": (context) => MyHomePage(),
+        "/loader": (context) => Loader(),
+        "/auth": (context) => Login()
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
