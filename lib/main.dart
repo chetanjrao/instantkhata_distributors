@@ -27,14 +27,12 @@ import 'package:instantkhata_distributors/ui/utils/loader.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarIconBrightness: Brightness.dark,
-    statusBarColor: Colors.white.withOpacity(1)
-  ));
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white.withOpacity(1)));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +43,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Axiforma',
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/loader",
+      initialRoute: "/home",
       routes: {
         "/home": (context) => MyHomePage(),
         "/loader": (context) => Loader(),
@@ -66,11 +64,21 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
   final InventoryRepository inventoryRepository = new InventoryRepository();
   final InvoiceRepository invoiceRepository = new InvoiceRepository();
-  final InvoiceInfoRepository invoiceInfoRepository = new InvoiceInfoRepository();
-  final TransactionRepository transactionRepository = new TransactionRepository();
+  final InvoiceInfoRepository invoiceInfoRepository =
+      new InvoiceInfoRepository();
+  final TransactionRepository transactionRepository =
+      new TransactionRepository();
   final RetailerRepository retailerRepository = new RetailerRepository();
   final SalesmanRepository salesmanRepository = new SalesmanRepository();
-  List<String> titles = ["Statistics", "Inventory", "Transactions", "Invoices", "Retailers", "Salesman", "Sign Out"];
+  List<String> titles = [
+    "Statistics",
+    "Inventory",
+    "Transactions",
+    "Invoices",
+    "Retailers",
+    "Salesman",
+    "Sign Out"
+  ];
   List<IconData> icons = [
     Feather.trending_up,
     Feather.inbox,
@@ -81,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Feather.log_out
   ];
 
-  void _onTapped(index){
+  void _onTapped(index) {
     setState(() {
       currentPage = index;
     });
@@ -90,125 +98,99 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        drawer: Drawer(
+        child: Scaffold(
+      drawer: Drawer(
           child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                ListTile(
-                  isThreeLine: false,
-                  title: Container(
-                    padding: EdgeInsets.only(
-                      top: 12,
-                      left: 8
-                    ),
-                    child: Text(
-                      "InstantKhata",
-                      style: TextStyle(
+        color: Colors.white,
+        child: Column(
+          children: [
+            ListTile(
+                isThreeLine: false,
+                title: Container(
+                  padding: EdgeInsets.only(top: 12, left: 8),
+                  child: Text(
+                    "InstantKhata",
+                    style: TextStyle(
                         color: Color(0xFFD44638),
                         fontSize: 18.0,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                  )
-                ),
-                Divider(),
-                Expanded(
-                  flex: 3,
-                  child: ListView.builder(
-                    itemCount: titles.length,
-                    itemBuilder: (context, index){
-                      return Container(
-                        margin: EdgeInsets.only(right: 16.0),
-                        decoration: BoxDecoration(
+                        fontWeight: FontWeight.w500),
+                  ),
+                )),
+            Divider(),
+            Expanded(
+              flex: 3,
+              child: ListView.builder(
+                itemCount: titles.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                      margin: EdgeInsets.only(right: 16.0),
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(48),
-                            bottomRight: Radius.circular(48)
-                          ),
-                          color: currentPage == index ? Theme.of(context).primaryColor.withOpacity(0.13) : Colors.transparent
-                        ),
-                        child: ListTile(
-                          leading: Container(
-                            child: Icon(
-                              icons[index],
+                              topRight: Radius.circular(48),
+                              bottomRight: Radius.circular(48)),
+                          color: currentPage == index
+                              ? Theme.of(context).primaryColor.withOpacity(0.13)
+                              : Colors.transparent),
+                      child: ListTile(
+                        leading: Container(
+                          child: Icon(icons[index],
                               size: 20,
-                              color: currentPage == index ? Theme.of(context).primaryColor : Color(0xFF464646)
-                            ),
-                          ),
-                          title: Container(
-                            child: Align(
-                              child: Text(
-                                titles[index],
-                                style: TextStyle(
+                              color: currentPage == index
+                                  ? Theme.of(context).primaryColor
+                                  : Color(0xFF464646)),
+                        ),
+                        title: Container(
+                          child: Align(
+                            child: Text(
+                              titles[index],
+                              style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  color: currentPage == index ? Theme.of(context).primaryColor : Color(0xFF464646),
-                                  fontSize: 15.0
-                                ),
-                              ),
-                              alignment: Alignment(-1.2, 0),
+                                  color: currentPage == index
+                                      ? Theme.of(context).primaryColor
+                                      : Color(0xFF464646),
+                                  fontSize: 15.0),
                             ),
+                            alignment: Alignment(-1.2, 0),
                           ),
-                          onTap: (){
-                            _onTapped(index);
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
-          )
-        ),
-        body: IndexedStack(
-          index: currentPage,
-          children: <Widget>[
-            Dashboard(),
-            BlocProvider(
-              create: (context) => InventoryBloc(
-                inventoryRepository
+                        ),
+                        onTap: () {
+                          _onTapped(index);
+                          Navigator.of(context).pop();
+                        },
+                      ));
+                },
               ),
-              child: Inventory()
-            ),
-            BlocProvider(
-              create: (context) => TransactionsBloc(
-                transactionRepository
-              ),
-              child: Transactions()
-            ),
-            MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => InvoiceBloc(
-                    invoiceRepository
-                  ),
-                ),
-                BlocProvider(
-                  create: (context) => InvoiceDetailsBloc(
-                    invoiceInfoRepository: invoiceInfoRepository
-                  ),
-                ),
-              ],
-              child: Invoice()
-            ),
-            BlocProvider(
-              create: (context) => RetailersBloc(
-                retailerRepository
-              ),
-              child: Retailers()
-            ),
-            BlocProvider(
-              create: (context) => SalesmanBloc(
-                salesmanRepository
-              ),
-              child: Salesman()
-            ),
+            )
           ],
         ),
-        
-      )
-    );
+      )),
+      body: IndexedStack(
+        index: currentPage,
+        children: <Widget>[
+          Dashboard(),
+          BlocProvider(
+              create: (context) => InventoryBloc(inventoryRepository),
+              child: Inventory()),
+          BlocProvider(
+              create: (context) => TransactionsBloc(transactionRepository),
+              child: Transactions()),
+          MultiBlocProvider(providers: [
+            BlocProvider(
+              create: (context) => InvoiceBloc(invoiceRepository),
+            ),
+            BlocProvider(
+              create: (context) => InvoiceDetailsBloc(
+                  invoiceInfoRepository: invoiceInfoRepository),
+            ),
+          ], child: Invoice()),
+          BlocProvider(
+              create: (context) => RetailersBloc(retailerRepository),
+              child: Retailers()),
+          BlocProvider(
+              create: (context) => SalesmanBloc(salesmanRepository),
+              child: Salesman()),
+        ],
+      ),
+    ));
   }
 }
